@@ -1,4 +1,4 @@
-#include "chess-library/include/chess.hpp"
+#include "chess.hpp"
 using namespace chess;
 using namespace std;
 
