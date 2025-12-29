@@ -13,7 +13,7 @@ using namespace chess;
 
 using result = pair<long long, vector<string>>;
 
-int deadline = 4;
+int deadline = 3;
 
 stack<AccumulatorPair> acc_p_stk;
 AccumulatorPair acc_p;
@@ -242,11 +242,17 @@ void uci_loop(Board &board) {
                 }
                 network.initialise_acc(board, &acc_p);
                 string best_mov = best_move(board, time_remained);
+                Move mov = uci::parseSan(board, best_mov);
+                best_mov = uci::moveToUci(mov);
+
                 cout << "bestmove " << best_mov << endl; 
             }
             else {
                 network.initialise_acc(board, &acc_p);
                 string best_mov = best_move(board);
+                Move mov = uci::parseSan(board, best_mov);
+                best_mov = uci::moveToUci(mov);
+
                 cout << "bestmove " << best_mov << endl; 
             } 
         } else if (line == "quit") {
@@ -260,7 +266,7 @@ void uci_loop(Board &board) {
 
 int main(){
     Board board;
-    network.load_from_file("../nn_ws/models/shallow.nnue");
+    network.load_from_file("shallow.nnue");
     uci_loop(board);
     return 0;
 }
